@@ -81,6 +81,7 @@ public class MainActivity extends Activity {
 
         WriteToFile writeToFile = new WriteToFile(getApplicationContext(), currentLog.toString());
         writeToFile.execute();
+        currentLog.delete(0, currentLog.capacity());
     }
 
     View.OnClickListener onButtonClick = new View.OnClickListener() {
@@ -258,10 +259,10 @@ public class MainActivity extends Activity {
             sdPath = new File(sdPath.getAbsolutePath() + "/" + LOG_PATH);
 
             // формируем объект File, который содержит путь к файлу
-            File sdFile = new File(sdPath, LOG_FILE);
+            File logFile = new File(sdPath, LOG_FILE);
             try {
                 // открываем поток для записи
-                BufferedWriter bw = new BufferedWriter(new FileWriter(sdFile));
+                BufferedWriter bw = new BufferedWriter(new FileWriter(logFile, true));
                 // пишем данные
                 bw.write(log + NEW_LINE);
                 // закрываем поток

@@ -76,6 +76,7 @@
             android:scrollbars = "vertical"
             android:scrollHorizontally="true"
             android:marqueeRepeatLimit="marquee_forever"
+            android:gravity="bottom"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
 
