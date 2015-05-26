@@ -15,7 +15,11 @@ import java.io.IOException;
 
 public class LogFileIO {
 
-    public static String readLogFile(){
+
+    public static final String LOG_PATH = "Piano";
+    public static final String LOG_FILE = "piano.log";
+
+    public static String readLogFile() {
         if (!Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {
             Log.e("SD Card", "Not Detected " + Environment.getExternalStorageState());
@@ -24,12 +28,12 @@ public class LogFileIO {
         // получаем путь к SD
         File logPath = Environment.getExternalStorageDirectory();
         // добавляем свой каталог к пути
-        logPath = new File(logPath.getAbsolutePath() + "/" + MainActivity.LOG_PATH);
+        logPath = new File(logPath.getAbsolutePath() + "/" + LOG_PATH);
         if (!logPath.exists()) {
             logPath.mkdirs();
         }
         // формируем объект File, который содержит путь к файлу
-        File logFile = new File(logPath, MainActivity.LOG_FILE);
+        File logFile = new File(logPath, LOG_FILE);
 
         if (!logFile.exists()) {
             try {
@@ -59,7 +63,7 @@ public class LogFileIO {
         return MainActivity.NEW_LINE;
     }
 
-    public static void appendLogFile(String log){
+    public static void appendLogFile(String log) {
         // проверяем доступность SD
         if (!Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {
@@ -68,10 +72,10 @@ public class LogFileIO {
         // получаем путь к SD
         File sdPath = Environment.getExternalStorageDirectory();
         // добавляем свой каталог к пути
-        sdPath = new File(sdPath.getAbsolutePath() + "/" + MainActivity.LOG_PATH);
+        sdPath = new File(sdPath.getAbsolutePath() + "/" + LOG_PATH);
 
         // формируем объект File, который содержит путь к файлу
-        File logFile = new File(sdPath, MainActivity.LOG_FILE);
+        File logFile = new File(sdPath, LOG_FILE);
         try {
             // открываем поток для записи
             BufferedWriter bw = new BufferedWriter(new FileWriter(logFile, true));

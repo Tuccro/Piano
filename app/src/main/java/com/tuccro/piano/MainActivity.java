@@ -26,8 +26,6 @@ public class MainActivity extends Activity {
     public static final String PRESSED_KEY = "Pressed key is ";
     public static final String SPACE = " ";
     public static final String NEW_LINE = "\n";
-    public static final String LOG_PATH = "Piano";
-    public static final String LOG_FILE = "piano.log";
 
     List<Button> buttons;
     private TextView tvLog;
@@ -89,49 +87,42 @@ public class MainActivity extends Activity {
             switch (v.getId()) {
                 case R.id.bt_c:
                     note = "C";
-                    //Log.e("Click", "Button " + note);
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
                     addItemToLog.handleMessage(message);
                     break;
                 case R.id.bt_d:
                     note = "D";
-                    //Log.e("Click", "Button " + note);
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
                     addItemToLog.handleMessage(message);
                     break;
                 case R.id.bt_e:
                     note = "E";
-                    //Log.e("Click", "Button " + note);
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
                     addItemToLog.handleMessage(message);
                     break;
                 case R.id.bt_f:
                     note = "F";
-                    //Log.e("Click", "Button " + note);
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
                     addItemToLog.handleMessage(message);
                     break;
                 case R.id.bt_g:
                     note = "G";
-                    //Log.e("Click", "Button " + note);
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
                     addItemToLog.handleMessage(message);
                     break;
                 case R.id.bt_a:
                     note = "A";
-                    //Log.e("Click", "Button " + note);
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
                     addItemToLog.handleMessage(message);
                     break;
                 case R.id.bt_b:
                     note = "B";
-                    //Log.e("Click", "Button " + note);
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
                     addItemToLog.handleMessage(message);

@@ -5,12 +5,10 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.5">
-
 
         <Button
             android:id="@+id/bt_c"
@@ -72,11 +70,11 @@
             android:id="@+id/tv_log"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:singleLine="false"
-            android:scrollbars = "vertical"
-            android:scrollHorizontally="true"
-            android:marqueeRepeatLimit="marquee_forever"
             android:gravity="bottom"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:scrollbars="vertical"
+            android:singleLine="false"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
 
