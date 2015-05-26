@@ -263,7 +263,7 @@ public class MainActivity extends Activity {
                 // открываем поток для записи
                 BufferedWriter bw = new BufferedWriter(new FileWriter(sdFile));
                 // пишем данные
-                bw.write(currentLog.toString() + NEW_LINE);
+                bw.write(log + NEW_LINE);
                 // закрываем поток
                 bw.close();
 
