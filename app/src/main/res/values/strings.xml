@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Piano</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="C">C</string>
+    <string name="D">D</string>
+    <string name="E">E</string>
+    <string name="F">F</string>
+    <string name="G">G</string>
+    <string name="A">A</string>
+    <string name="B">B</string>
 </resources>
