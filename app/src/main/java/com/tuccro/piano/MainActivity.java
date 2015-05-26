@@ -185,14 +185,14 @@ public class MainActivity extends Activity {
                 return null;
             }
 
-            // получаем путь к SD
+            // РїРѕР»СѓС‡Р°РµРј РїСѓС‚СЊ Рє SD
             File logPath = Environment.getExternalStorageDirectory();
-            // добавляем свой каталог к пути
+            // РґРѕР±Р°РІР»СЏРµРј СЃРІРѕР№ РєР°С‚Р°Р»РѕРі Рє РїСѓС‚Рё
             logPath = new File(logPath.getAbsolutePath() + "/" + LOG_PATH);
             if (!logPath.exists()) {
                 logPath.mkdirs();
             }
-            // формируем объект File, который содержит путь к файлу
+            // С„РѕСЂРјРёСЂСѓРµРј РѕР±СЉРµРєС‚ File, РєРѕС‚РѕСЂС‹Р№ СЃРѕРґРµСЂР¶РёС‚ РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ
             File logFile = new File(logPath, LOG_FILE);
 
             if (!logFile.exists()) {
@@ -204,10 +204,10 @@ public class MainActivity extends Activity {
             }
             try {
                 StringBuilder sbLog = new StringBuilder();
-                // открываем поток для чтения
+                // РѕС‚РєСЂС‹РІР°РµРј РїРѕС‚РѕРє РґР»СЏ С‡С‚РµРЅРёСЏ
                 BufferedReader br = new BufferedReader(new FileReader(logFile));
                 String str = "";
-                // читаем содержимое
+                // С‡РёС‚Р°РµРј СЃРѕРґРµСЂР¶РёРјРѕРµ
                 while ((str = br.readLine()) != null) {
                     sbLog.append(str + NEW_LINE);
                 }
@@ -246,25 +246,25 @@ public class MainActivity extends Activity {
         @Override
         protected Object doInBackground(Object[] params) {
 
-            // проверяем доступность SD
+            // РїСЂРѕРІРµСЂСЏРµРј РґРѕСЃС‚СѓРїРЅРѕСЃС‚СЊ SD
             if (!Environment.getExternalStorageState().equals(
                     Environment.MEDIA_MOUNTED)) {
-                Log.d("32325435363", "SD-карта не доступна: " + Environment.getExternalStorageState());
+                Log.d("32325435363", "SD-РєР°СЂС‚Р° РЅРµ РґРѕСЃС‚СѓРїРЅР°: " + Environment.getExternalStorageState());
                 return null;
             }
-            // получаем путь к SD
+            // РїРѕР»СѓС‡Р°РµРј РїСѓС‚СЊ Рє SD
             File sdPath = Environment.getExternalStorageDirectory();
-            // добавляем свой каталог к пути
+            // РґРѕР±Р°РІР»СЏРµРј СЃРІРѕР№ РєР°С‚Р°Р»РѕРі Рє РїСѓС‚Рё
             sdPath = new File(sdPath.getAbsolutePath() + "/" + LOG_PATH);
 
-            // формируем объект File, который содержит путь к файлу
+            // С„РѕСЂРјРёСЂСѓРµРј РѕР±СЉРµРєС‚ File, РєРѕС‚РѕСЂС‹Р№ СЃРѕРґРµСЂР¶РёС‚ РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ
             File sdFile = new File(sdPath, LOG_FILE);
             try {
-                // открываем поток для записи
+                // РѕС‚РєСЂС‹РІР°РµРј РїРѕС‚РѕРє РґР»СЏ Р·Р°РїРёСЃРё
                 BufferedWriter bw = new BufferedWriter(new FileWriter(sdFile));
-                // пишем данные
+                // РїРёС€РµРј РґР°РЅРЅС‹Рµ
                 bw.write(currentLog.toString() + NEW_LINE);
-                // закрываем поток
+                // Р·Р°РєСЂС‹РІР°РµРј РїРѕС‚РѕРє
                 bw.close();
 
             } catch (IOException e) {
