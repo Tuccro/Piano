@@ -2,25 +2,17 @@ package com.tuccro.piano;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import com.tuccro.piano.Utils.LogFileIO;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +39,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        buttons = new ArrayList<Button>();
+        buttons = new ArrayList<>();
 
         buttons.add((Button) findViewById(R.id.bt_c));
         buttons.add((Button) findViewById(R.id.bt_d));
@@ -62,7 +54,7 @@ public class MainActivity extends Activity {
         tvLog = (TextView) findViewById(R.id.tv_log);
         tvLog.setMovementMethod(new ScrollingMovementMethod());
 
-        ReadFromFile readFromFile = new ReadFromFile(getApplicationContext());
+        ReadFromFile readFromFile = new ReadFromFile();
         readFromFile.execute();
 
     }
@@ -71,7 +63,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        ReadFromFile readFromFile = new ReadFromFile(getApplicationContext());
+        ReadFromFile readFromFile = new ReadFromFile();
         readFromFile.execute();
     }
 
@@ -79,9 +71,11 @@ public class MainActivity extends Activity {
     protected void onPause() {
         super.onPause();
 
-        WriteToFile writeToFile = new WriteToFile(getApplicationContext(), currentLog.toString());
-        writeToFile.execute();
-        currentLog.delete(0, currentLog.capacity());
+        if (!isLogEmpty && currentLog.capacity() > 0) {
+            WriteToFile writeToFile = new WriteToFile(currentLog.toString());
+            writeToFile.execute();
+            currentLog.delete(0, currentLog.capacity());
+        }
     }
 
     View.OnClickListener onButtonClick = new View.OnClickListener() {
@@ -170,57 +164,12 @@ public class MainActivity extends Activity {
 
     class ReadFromFile extends AsyncTask {
 
-        Context context;
         String log = null;
-
-        public ReadFromFile(Context context) {
-            this.context = context;
-        }
 
         @Override
         protected Object doInBackground(Object[] params) {
 
-            if (!Environment.getExternalStorageState().equals(
-                    Environment.MEDIA_MOUNTED)) {
-                Log.e("SD Card", "Not Detected " + Environment.getExternalStorageState());
-                return null;
-            }
-
-            // получаем путь к SD
-            File logPath = Environment.getExternalStorageDirectory();
-            // добавляем свой каталог к пути
-            logPath = new File(logPath.getAbsolutePath() + "/" + LOG_PATH);
-            if (!logPath.exists()) {
-                logPath.mkdirs();
-            }
-            // формируем объект File, который содержит путь к файлу
-            File logFile = new File(logPath, LOG_FILE);
-
-            if (!logFile.exists()) {
-                try {
-                    logFile.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            try {
-                StringBuilder sbLog = new StringBuilder();
-                // открываем поток для чтения
-                BufferedReader br = new BufferedReader(new FileReader(logFile));
-                String str = "";
-                // читаем содержимое
-                while ((str = br.readLine()) != null) {
-                    sbLog.append(str + NEW_LINE);
-                }
-
-                if (sbLog.capacity() != 0) {
-                    log = sbLog.toString();
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            log = LogFileIO.readLogFile();
             return null;
         }
 
@@ -231,47 +180,20 @@ public class MainActivity extends Activity {
                 tvLog.setText(log);
             }
         }
-
     }
 
     class WriteToFile extends AsyncTask {
 
-        Context context;
         String log;
 
-        public WriteToFile(Context context, String sessionLog){
-            this.context = context;
+        public WriteToFile(String sessionLog) {
             this.log = sessionLog;
         }
 
         @Override
         protected Object doInBackground(Object[] params) {
 
-            // проверяем доступность SD
-            if (!Environment.getExternalStorageState().equals(
-                    Environment.MEDIA_MOUNTED)) {
-                Log.d("32325435363", "SD-карта не доступна: " + Environment.getExternalStorageState());
-                return null;
-            }
-            // получаем путь к SD
-            File sdPath = Environment.getExternalStorageDirectory();
-            // добавляем свой каталог к пути
-            sdPath = new File(sdPath.getAbsolutePath() + "/" + LOG_PATH);
-
-            // формируем объект File, который содержит путь к файлу
-            File logFile = new File(sdPath, LOG_FILE);
-            try {
-                // открываем поток для записи
-                BufferedWriter bw = new BufferedWriter(new FileWriter(logFile, true));
-                // пишем данные
-                bw.write(log + NEW_LINE);
-                // закрываем поток
-                bw.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+            LogFileIO.appendLogFile(log);
             return null;
         }
     }
