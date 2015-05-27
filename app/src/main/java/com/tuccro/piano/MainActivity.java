@@ -83,50 +83,67 @@ public class MainActivity extends Activity {
             Bundle bundle = new Bundle();
             Message message = new Message();
             String note;
+            SoundFactory sound;
 
             switch (v.getId()) {
                 case R.id.bt_c:
                     note = "C";
+                    sound = new SoundFactory(261.6, 2);
+                    sound.play();
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
                     addItemToLog.handleMessage(message);
                     break;
                 case R.id.bt_d:
                     note = "D";
+                    sound = new SoundFactory(293.7, 2);
+                    sound.play();
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
                     addItemToLog.handleMessage(message);
                     break;
                 case R.id.bt_e:
                     note = "E";
+                    sound = new SoundFactory(329.6, 2);
+                    sound.play();
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
                     addItemToLog.handleMessage(message);
                     break;
                 case R.id.bt_f:
                     note = "F";
+                    sound = new SoundFactory(349.2, 2);
+                    sound.play();
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
                     addItemToLog.handleMessage(message);
                     break;
                 case R.id.bt_g:
                     note = "G";
+                    sound = new SoundFactory(392, 2);
+                    sound.play();
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
                     addItemToLog.handleMessage(message);
                     break;
                 case R.id.bt_a:
                     note = "A";
+                    sound = new SoundFactory(440, 2);
+                    sound.play();
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
                     addItemToLog.handleMessage(message);
                     break;
                 case R.id.bt_b:
                     note = "B";
+                    sound = new SoundFactory(494, 2);
+                    sound.play();
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
                     addItemToLog.handleMessage(message);
                     break;
+
+
             }
         }
     };
