@@ -3,6 +3,7 @@ package com.tuccro.piano;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.util.Log;
 
 public class SoundFactory {
 
@@ -33,6 +34,7 @@ public class SoundFactory {
 
     void init() {
         numSamples = (int) duration * sampleRate;
+        Log.e("Sound duration:", numSamples +" seconds");
         sample = new double[numSamples];
         generatedSnd = new byte[2 * numSamples];
     }

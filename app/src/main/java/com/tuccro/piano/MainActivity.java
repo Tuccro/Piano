@@ -4,11 +4,17 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceScreen;
+import android.text.Layout;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tuccro.piano.Utils.LogFileIO;
@@ -31,6 +37,7 @@ public class MainActivity extends Activity {
     private TextView tvLog;
     private StringBuilder currentLog = null;
     boolean isLogEmpty = true;
+    boolean isTVLogFullscreen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +61,27 @@ public class MainActivity extends Activity {
 
         ReadFromFile readFromFile = new ReadFromFile();
         readFromFile.execute();
+
+        tvLog.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                View llButtons = (LinearLayout) findViewById(R.id.ll_buttons);
+                ViewGroup.LayoutParams lp = llButtons.getLayoutParams();
+
+                if (isTVLogFullscreen) {
+                    lp.height = 0;
+                    llButtons.setLayoutParams(lp);
+                    isTVLogFullscreen = true;
+                } else {
+//                    lp.height = 100; HOW MUCH?!
+                    llButtons.setLayoutParams(lp);
+                    isTVLogFullscreen = false;
+                }
+
+                return true;
+            }
+        });
 
     }
 
@@ -88,7 +116,7 @@ public class MainActivity extends Activity {
             switch (v.getId()) {
                 case R.id.bt_c:
                     note = "C";
-                    sound = new SoundFactory(261.6, 2);
+                    sound = new SoundFactory(261.6, 1);
                     sound.play();
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
@@ -104,7 +132,7 @@ public class MainActivity extends Activity {
                     break;
                 case R.id.bt_e:
                     note = "E";
-                    sound = new SoundFactory(329.6, 2);
+                    sound = new SoundFactory(329.6, 0.5);
                     sound.play();
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
