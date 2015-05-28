@@ -8,4 +8,6 @@
     <string name="G">G</string>
     <string name="A">A</string>
     <string name="B">B</string>
+    <string name="title_activity_log">Log</string>
+
 </resources>

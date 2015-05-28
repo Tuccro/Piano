@@ -2,19 +2,14 @@ package com.tuccro.piano;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceScreen;
-import android.text.Layout;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tuccro.piano.Utils.LogFileIO;
@@ -59,26 +54,18 @@ public class MainActivity extends Activity {
         tvLog = (TextView) findViewById(R.id.tv_log);
         tvLog.setMovementMethod(new ScrollingMovementMethod());
 
-        ReadFromFile readFromFile = new ReadFromFile();
+        ReadFromFile readFromFile = new ReadFromFile(tvLog);
         readFromFile.execute();
 
         tvLog.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
 
-                View llButtons = (LinearLayout) findViewById(R.id.ll_buttons);
-                ViewGroup.LayoutParams lp = llButtons.getLayoutParams();
-
-                if (isTVLogFullscreen) {
-                    lp.height = 0;
-                    llButtons.setLayoutParams(lp);
-                    isTVLogFullscreen = true;
-                } else {
-//                    lp.height = 100; HOW MUCH?!
-                    llButtons.setLayoutParams(lp);
-                    isTVLogFullscreen = false;
+                if (!isTVLogFullscreen) {
+                    Intent intent = new Intent(getApplicationContext(), LogActivity.class);
+                    intent.putExtra("", tvLog.getText().toString());
+                    startActivity(intent);
                 }
-
                 return true;
             }
         });
@@ -89,7 +76,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        ReadFromFile readFromFile = new ReadFromFile();
+        ReadFromFile readFromFile = new ReadFromFile(tvLog);
         readFromFile.execute();
     }
 
@@ -124,7 +111,7 @@ public class MainActivity extends Activity {
                     break;
                 case R.id.bt_d:
                     note = "D";
-                    sound = new SoundFactory(293.7, 2);
+                    sound = new SoundFactory(293.7, 1);
                     sound.play();
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
@@ -132,7 +119,7 @@ public class MainActivity extends Activity {
                     break;
                 case R.id.bt_e:
                     note = "E";
-                    sound = new SoundFactory(329.6, 0.5);
+                    sound = new SoundFactory(329.6, 1);
                     sound.play();
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
@@ -140,7 +127,7 @@ public class MainActivity extends Activity {
                     break;
                 case R.id.bt_f:
                     note = "F";
-                    sound = new SoundFactory(349.2, 2);
+                    sound = new SoundFactory(349.2, 1);
                     sound.play();
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
@@ -148,7 +135,7 @@ public class MainActivity extends Activity {
                     break;
                 case R.id.bt_g:
                     note = "G";
-                    sound = new SoundFactory(392, 2);
+                    sound = new SoundFactory(392, 1);
                     sound.play();
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
@@ -156,7 +143,7 @@ public class MainActivity extends Activity {
                     break;
                 case R.id.bt_a:
                     note = "A";
-                    sound = new SoundFactory(440, 2);
+                    sound = new SoundFactory(440, 1);
                     sound.play();
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
@@ -164,7 +151,7 @@ public class MainActivity extends Activity {
                     break;
                 case R.id.bt_b:
                     note = "B";
-                    sound = new SoundFactory(494, 2);
+                    sound = new SoundFactory(494, 1);
                     sound.play();
                     bundle.putString(LOG_MESSAGE, PRESSED_KEY + note);
                     message.setData(bundle);
@@ -201,6 +188,11 @@ public class MainActivity extends Activity {
     class ReadFromFile extends AsyncTask {
 
         String log = null;
+        TextView textView;
+
+        public ReadFromFile(TextView textView) {
+            this.textView = textView;
+        }
 
         @Override
         protected Object doInBackground(Object[] params) {
@@ -213,7 +205,7 @@ public class MainActivity extends Activity {
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
             if (log != null) {
-                tvLog.setText(log);
+                textView.setText(log);
             }
         }
     }
